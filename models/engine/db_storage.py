@@ -51,7 +51,6 @@ class DBStorage:
             allClassObjs = self.__session.query(cls).all()
             for obj in allClassObjs:
                 key = type(obj).__name__ + "." + obj.id
-                #value = obj.to_dict()
                 newDict[key] = obj
             return (newDict)
         else:
@@ -108,5 +107,5 @@ class DBStorage:
         self.__session = Session()
 
     def close(self):
-        '''Method adding remove method to self.__session'''
+        """Method adding remove method to self.__session"""
         self.__session.close()
