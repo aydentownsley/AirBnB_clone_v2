@@ -1,33 +1,45 @@
 #!/usr/bin/python3
-'''Module to start Flask web app'''
-from flask import Flask
-
+""" simple flash web app """
+from flask import Flask, render_template, escape
 app = Flask(__name__)
-HOST = '0.0.0.0'
-PORT = 5000
+app.url_map.strict_slashes = False
 
 
-@app.route('/', strict_slashes=False)
+@app.route('/')
 def hello_hbnb():
-    '''method that returns hello world'''
+    """[summary]
+
+    Returns:
+        [type]: [description]
+    """
     return 'Hello HBNB!'
 
 
-@app.route('/hbnb', strict_slashes=False)
+@app.route('/hbnb')
 def hbnb():
-    '''method that returns hbnb'''
-    return 'HBNB'
+    """[summary]
+
+    Returns:
+        [type]: [description]
+    """
+    return ('HBNB')
 
 
-@app.route('/c/<size>', strict_slashes=False)
-def c_route(size):
-    '''method that returns C followed by parameter'''
-    if "_" in size:
-        new = size.replace("_", " ")
-        return 'C {}'.format(new)
-    else:
-        return 'C {}'.format(size)
+@app.route('/c/<text>')
+def c_text(text):
+    """[summary]
+
+    Args:
+        text ([type]): [description]
+
+    Returns:
+        [type]: [description]
+    """
+    if text:
+        if '_' in text:
+            text = text.replace("_", " ")
+    return 'C {}'.format(escape(text))
 
 
-if __name__ == "__main__":
-    app.run(HOST, PORT)
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=5000)

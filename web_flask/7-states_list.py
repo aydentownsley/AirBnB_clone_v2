@@ -1,27 +1,29 @@
 #!/usr/bin/python3
-'''Module to start Flask web app'''
-from flask import Flask, render_template
+""" starts app for 7 """
+from flask import Flask
+from flask import render_template
 from models import storage
 from models.state import State
-
 app = Flask(__name__)
-HOST = '0.0.0.0'
-PORT = 5000
-
-
-@app.route('/states_list', strict_slashes=False)
-def states_route():
-    '''method that returns n in HTML template'''
-    stateDicts = storage.all(State)
-
-    return render_template('7-states_list.html', stateDicts=stateDicts)
+app.url_map.strict_slashes = False
 
 
 @app.teardown_appcontext
-def the_teardown(context):
-    '''Method to remove current SQLAlchemy Session'''
+def storage_close(self):
+    """[summary]
+    """
     storage.close()
 
 
-if __name__ == "__main__":
-    app.run(HOST, PORT)
+@app.route('/states_list')
+def states_list():
+    """[summary]
+
+    Returns:
+        [type]: [description]
+    """
+    all_states = storage.all(State).values()
+    return render_template('7-states_list.html', all_states=all_states)
+
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=5000)
