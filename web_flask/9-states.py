@@ -4,6 +4,7 @@ from flask import Flask
 from flask import render_template
 from models import storage
 from models.state import State
+from sqlalchemy import orm
 app = Flask(__name__)
 app.url_map.strict_slashes = False
 
