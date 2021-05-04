@@ -9,14 +9,14 @@ app.url_map.strict_slashes = False
 
 
 @app.teardown_appcontext
-def storage_close(self):
+def storage_close(context):
     """[summary]
     """
     storage.close()
 
 
 @app.route('/cities_by_states')
-def cities_list():
+def cities_route():
     """[summary]
 
     Returns:
@@ -24,7 +24,7 @@ def cities_list():
     """
     stateList = storage.all(State)
 
-    return render_template('8-cities_by_states.html', all_states=stateList)
+    return render_template('8-cities_by_states.html', all_states=all_states)
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)
