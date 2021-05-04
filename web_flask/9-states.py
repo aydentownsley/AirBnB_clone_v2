@@ -5,34 +5,48 @@ from flask import render_template
 from models import storage
 from models.state import State
 from sqlalchemy import orm
+
+
 app = Flask(__name__)
 app.url_map.strict_slashes = False
 
 
 @app.teardown_appcontext
 def teardown(context):
-    """ Method to remove current SQLAlchemy Session """
+    """[summary]
+
+    Args:
+        context ([type]): [description]
+    """
     storage.close()
 
 
-@app.route('/states')
-def state_route():
+@app.route('/states', strict_slashes=False)
+def states_route():
     """[summary]
+
+    Returns:
+        [type]: [description]
     """
-    state_dict = storage.all(State)
-    return render_template('9-states.html', state_dict=state_dict)
+    stateDict = storage.all(State)
+
+    return render_template('9-states.html', stateDict=stateDict)
 
 
-@app.route('/states/<id>')
+@app.route('/states/<id>', strict_slashes=False)
 def state_id_route(id):
     """[summary]
 
     Args:
         id ([type]): [description]
+
+    Returns:
+        [type]: [description]
     """
-    state_dict = storage.all(State)
+    stateDict = storage.all(State)
     try:
-        state = state_dict.get("State.{}".format(id))
+        state = stateDict.get("State.{}".format(id))
+        return render_template('9-states.html', state=state)
     except:
         return render_template('9-states.html')
 
