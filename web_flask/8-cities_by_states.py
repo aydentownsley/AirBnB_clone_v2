@@ -15,15 +15,16 @@ def storage_close(self):
     storage.close()
 
 
-@app.route('/states_list')
-def states_list():
+@app.route('/cities_by_states')
+def cities_list():
     """[summary]
 
     Returns:
         [type]: [description]
     """
-    all_states = storage.all(State).values()
-    return render_template('8-cities_by_states.html', all_states=all_states)
+    stateList = storage.all(State)
+
+    return render_template('8-cities_by_states.html', all_states=stateList)
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)
